@@ -7,7 +7,6 @@ import (
 
 var param = &SearchParam{
 	Query: "golang",
-	Page:  1,
 }
 
 func TestBuildRequest(t *testing.T) {
