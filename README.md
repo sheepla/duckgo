@@ -8,7 +8,10 @@
 
 <h1>🦆 duckgo</h1>
 
-**duckgo** is a command line tool to query DuckDuckGo and open items from search result with Web browser quickly
+**duckgo** is a command line tool to query DuckDuckGo and open items from search result with Web browser quickly.
+
+This tool is inspired by [ddgr](https://github.com/jarun/ddgr). However, it has been developed with an even greater focus on agility and portability.
+
 </div>
 
 ## Demo
@@ -40,6 +43,12 @@ Options:
 ```
 go install github.com/sheepla/duckgo@latest
 ```
+
+## Similar projects
+
+- [ddgr](https://github.com/jarun/ddgr) - DuckDuckGo client written in Python
+- [googler](https://github.com/jarun/googler) - Google client written in Python
+- [rearx](https://github.com/garak92/rearx) - TUI client for the [searx](https://github.com/searx/searx) meta search engine written in Rust
 
 ## Author
 
