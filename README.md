@@ -6,7 +6,7 @@
 
 <div align="center"
 
-# 🦆 duckgo
+<h1>🦆 duckgo</h1>
 
 **duckgo** is a command line tool to query DuckDuckGo and open items from search result with Web browser quickly
 </div>
