@@ -11,6 +11,14 @@
 **duckgo** is a command line tool to query DuckDuckGo and open items from search result with Web browser quickly
 </div>
 
+## Demo
+
+<div align="center">
+
+<img src="https://private-user-images.githubusercontent.com/62412884/266784515-4d5b3951-1e03-44f5-a79f-32d5cbc90ea2.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE2OTQyNjc4NDMsIm5iZiI6MTY5NDI2NzU0MywicGF0aCI6Ii82MjQxMjg4NC8yNjY3ODQ1MTUtNGQ1YjM5NTEtMWUwMy00NGY1LWE3OWYtMzJkNWNiYzkwZWEyLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFJV05KWUFYNENTVkVINTNBJTJGMjAyMzA5MDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMwOTA5VDEzNTIyM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTA3MTk5MmU3YzBjYmQ4Y2QxMTY1YWU2NzcxZWYyZjhjODFlNjQ3MjlhNDI2MThmZTAzMmVmMmIyMTdlNzk1ZDImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.SPDMKpjYQHf2cbZqNgpvpzHiFm5N0cZ7t7j7aFWHiMw" width="70%" >
+
+</div>
+
 ## Usage
 
 ```
