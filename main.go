@@ -7,15 +7,17 @@ import (
 	"os"
 	"strings"
 
+	"github.com/sheepla/duckgo/client"
+
 	"github.com/alexflint/go-arg"
 	fzf "github.com/koki-develop/go-fzf"
-	"github.com/sheepla/duckgo/client"
+	"github.com/mattn/go-runewidth"
 	"github.com/skratchdot/open-golang/open"
 )
 
 const (
-    appVersion = "unknown"
-    appRevision = "unknown"
+	appVersion  = "unknown"
+	appRevision = "unknown"
 )
 
 type Options struct {
@@ -24,7 +26,7 @@ type Options struct {
 	//Page    bool     `arg:"-p, --page" default:"1" help:"index of page"`
 	Browser string   `arg:"-b, --browser" help:"the command of Web browser to open URL"`
 	Query   []string `arg:"positional" help:"keywords to search"`
-    Version bool `help:"show version"`
+	Version bool     `help:"show version"`
 }
 
 func main() {
@@ -55,7 +57,7 @@ func parseArgs(args []string) (*Options, error) {
 			p.WriteHelp(os.Stderr)
 			return &opts, nil
 		case errors.Is(err, arg.ErrVersion):
-            fmt.Fprintln(os.Stderr, fmt.Sprintf("%s-%s", appVersion, appRevision))
+			fmt.Fprintf(os.Stderr, "%s-%s\n", appVersion, appRevision)
 		default:
 			return &opts, err
 		}
@@ -65,7 +67,7 @@ func parseArgs(args []string) (*Options, error) {
 }
 
 func run(opts *Options) error {
-    param, err := client.NewSearchParam(strings.Join(opts.Query, " "))
+	param, err := client.NewSearchParam(strings.Join(opts.Query, " "))
 	if err != nil {
 		return err
 	}
@@ -122,10 +124,12 @@ func find(result []client.SearchResult) ([]int, error) {
 			return result[i].Title
 		},
 		fzf.WithPreviewWindow(func(idx int, width int, height int) string {
-			return fmt.Sprintf(
-				"\n\n%s\n\n──────────────────\n\n%s\n\n%s\n",
+			content := fmt.Sprintf(
+				"\n\n  %s\n\n──────────────────\n\n  %s\n\n  %s\n",
 				result[idx].Title, result[idx].Snippet, result[idx].Link,
 			)
+
+			return runewidth.Wrap(content, width-2)
 		}),
 	)
 }
