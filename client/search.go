@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -22,10 +23,15 @@ type SearchParam struct {
 	Query string
 }
 
-func NewSearchParam(query string) *SearchParam {
-	return &SearchParam{
-		Query: strings.TrimSpace(query),
+func NewSearchParam(query string) (*SearchParam, error) {
+	q := strings.TrimSpace(query)
+	if q == "" {
+		return nil, errors.New("search query is empty")
 	}
+
+	return &SearchParam{
+		Query: q,
+	}, nil
 }
 
 func (param *SearchParam) buildURL() (*url.URL, error) {

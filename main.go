@@ -13,13 +13,18 @@ import (
 	"github.com/skratchdot/open-golang/open"
 )
 
+const (
+    appVersion = "unknown"
+    appRevision = "unknown"
+)
+
 type Options struct {
-	//Open  bool     `help:"open target URL in default browser"`
 	Json bool `arg:"-j, --json" help:"output results in JSON format"`
 	//Shell bool     `help:"start bash-like interactive mode instead of fuzzy-finder UI"`
 	Page    bool     `arg:"-p, --page" default:"1" help:"index of page"`
-	Browser string   `arg:"-b, --browser" help:"browser"`
+	Browser string   `arg:"-b, --browser" help:"the command of Web browser to open URL"`
 	Query   []string `arg:"positional" help:"keywords to search"`
+    Version bool `help:"show version"`
 }
 
 func main() {
@@ -50,7 +55,7 @@ func parseArgs(args []string) (*Options, error) {
 			p.WriteHelp(os.Stderr)
 			return &opts, nil
 		case errors.Is(err, arg.ErrVersion):
-			p.WriteUsage(os.Stderr)
+            fmt.Fprintln(os.Stderr, fmt.Sprintf("%s-%s", appVersion, appRevision))
 		default:
 			return &opts, err
 		}
@@ -60,15 +65,18 @@ func parseArgs(args []string) (*Options, error) {
 }
 
 func run(opts *Options) error {
-	result, err := client.Search(
-		client.NewSearchParam(strings.Join(opts.Query, " ")),
-	)
+    param, err := client.NewSearchParam(strings.Join(opts.Query, " "))
+	if err != nil {
+		return err
+	}
+
+	result, err := client.Search(param)
 	if err != nil {
 		return err
 	}
 
 	if opts.Json {
-		if err := json.NewDecoder(os.Stdout).Decode(&result); err != nil {
+		if err := json.NewEncoder(os.Stdout).Encode(&result); err != nil {
 			return err
 		}
 
