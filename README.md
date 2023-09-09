@@ -1,6 +1,17 @@
+<div align="right">
+
+[![goreleaser](https://github.com/sheepla/duckgo/actions/workflows/release.yml/badge.svg)](https://github.com/sheepla/duckgo/actions/workflows/release.yml)
+
+</div>
+
+<div align="center"
+
 # 🦆 duckgo
 
 **duckgo** is a command line tool to query DuckDuckGo and open items from search result with Web browser quickly
+</div>
+
+
 
 ## Usage
 
