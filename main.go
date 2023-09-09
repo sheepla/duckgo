@@ -125,7 +125,7 @@ func find(result []client.SearchResult) ([]int, error) {
 		},
 		fzf.WithPreviewWindow(func(idx int, width int, height int) string {
 			content := fmt.Sprintf(
-				"\n\n  %s\n\n──────────────────\n\n  %s\n\n  %s\n",
+				"\n\n%s\n\n%s\n\n%s\n",
 				result[idx].Title, result[idx].Snippet, result[idx].Link,
 			)
 
