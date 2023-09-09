@@ -15,7 +15,7 @@ import (
 	"github.com/skratchdot/open-golang/open"
 )
 
-const (
+var (
 	appVersion  = "unknown"
 	appRevision = "unknown"
 )
