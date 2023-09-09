@@ -1,6 +1,6 @@
 module github.com/sheepla/duckgo
 
-go 1.21.0
+go 1.20
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
@@ -8,7 +8,7 @@ require (
 	github.com/koki-develop/go-fzf v0.15.0
 	github.com/mattn/go-runewidth v0.0.15
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
-	golang.org/x/net v0.7.0
+	golang.org/x/net v0.15.0
 )
 
 require (
@@ -29,7 +29,7 @@ require (
 	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
-	golang.org/x/sys v0.7.0 // indirect
-	golang.org/x/term v0.6.0 // indirect
-	golang.org/x/text v0.7.0 // indirect
+	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/term v0.12.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
 )
