@@ -24,3 +24,5 @@
 # Go workspace file
 go.work
 
+# Executable destination
+bin/
