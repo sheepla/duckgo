@@ -21,7 +21,7 @@ const (
 type Options struct {
 	Json bool `arg:"-j, --json" help:"output results in JSON format"`
 	//Shell bool     `help:"start bash-like interactive mode instead of fuzzy-finder UI"`
-	Page    bool     `arg:"-p, --page" default:"1" help:"index of page"`
+	//Page    bool     `arg:"-p, --page" default:"1" help:"index of page"`
 	Browser string   `arg:"-b, --browser" help:"the command of Web browser to open URL"`
 	Query   []string `arg:"positional" help:"keywords to search"`
     Version bool `help:"show version"`
