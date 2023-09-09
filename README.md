@@ -40,9 +40,11 @@ Options:
 
 ## Installation
 
-```
-go install github.com/sheepla/duckgo@latest
-```
+You can download executable binaries from the release page.
+
+> [latest release](https://github.com/sheepla/duckgo/releases/latest)
+
+To build from source, run `make build`.
 
 ## Similar projects
 
