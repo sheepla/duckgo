@@ -8,8 +8,8 @@ REVISION := $(shell git rev-parse --short HEAD)
 
 LDFLAGS := -w \
 		   -s \
-		   -X "main.version=$(VERSION)" \
-		   -X "main.revision=$(REVISION)"
+		   -X "main.appVersion=$(VERSION)" \
+		   -X "main.appRevision=$(REVISION)"
 
 COVERAGE_OUT := .test/cover.out
 COVERAGE_HTML := .test/cover.html
