@@ -5,14 +5,13 @@
 ## Usage
 
 ```
-Usage: duckgo [--json] [--page] [--browser BROWSER] [--version] [QUERY [QUERY ...]]
+Usage: duckgo [--json] [--browser BROWSER] [--version] [QUERY [QUERY ...]]
 
 Positional arguments:
   QUERY                  keywords to search
 
 Options:
   --json, -j             output results in JSON format
-  --page, -p             index of page [default: 1]
   --browser BROWSER, -b BROWSER
                          the command of Web browser to open URL
   --version              show version
