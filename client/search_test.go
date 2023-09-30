@@ -1,7 +1,6 @@
 package client
 
 import (
-	"encoding/json"
 	"testing"
 )
 
@@ -10,7 +9,7 @@ var param = &SearchParam{
 }
 
 func TestBuildRequest(t *testing.T) {
-	req, err := param.buildRequest()
+	req, err := buildRequest(param, defaultClientOption)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -22,15 +21,8 @@ func TestBuildRequest(t *testing.T) {
 }
 
 func TestSearch(t *testing.T) {
-    result, err := Search(param)
-    if err != nil {
-        t.Fatal(err)
-    }
-
-    j, err := json.Marshal(result)
-    if err != nil {
-        panic(err)
-    }
-
-    t.Log(string(j))
+	_, err := Search(param)
+	if err != nil {
+		t.Fatal(err)
+	}
 }

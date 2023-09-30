@@ -14,13 +14,39 @@ import (
 	"golang.org/x/net/html"
 )
 
-const (
-	defaultReferrer  = "https://google.com"
-	defaultUserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5666.197 Safari/537.36"
-)
-
 type SearchParam struct {
 	Query string
+}
+
+type ClientOption struct {
+	Referrer  string
+	UserAgent string
+	Timeout   time.Duration
+}
+
+var defaultClientOption = &ClientOption{
+	Referrer:  "https://google.com",
+	UserAgent: `Mozilla/5.0 (Windows NT 10.0; WOW64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5666.197 Safari/537.36`,
+	Timeout:   5 * time.Second,
+}
+
+func NewClientOption(referrer, userAgent string, timeout time.Duration) *ClientOption {
+	if referrer == "" {
+		referrer = defaultClientOption.Referrer
+	}
+	if userAgent == "" {
+		referrer = defaultClientOption.UserAgent
+	}
+
+	if timeout == 0 {
+		timeout = defaultClientOption.Timeout
+	}
+
+	return &ClientOption{
+		Referrer:  referrer,
+		UserAgent: userAgent,
+		Timeout:   timeout,
+	}
 }
 
 func NewSearchParam(query string) (*SearchParam, error) {
@@ -49,7 +75,7 @@ func (param *SearchParam) buildURL() (*url.URL, error) {
 	return u, nil
 }
 
-func (param *SearchParam) buildRequest() (*http.Request, error) {
+func buildRequest(param *SearchParam, opt *ClientOption) (*http.Request, error) {
 	u, err := param.buildURL()
 	if err != nil {
 		return nil, err
@@ -60,8 +86,8 @@ func (param *SearchParam) buildRequest() (*http.Request, error) {
 		return req, err
 	}
 
-	req.Header.Add("Referrer", defaultReferrer)
-	req.Header.Add("User-Agent", defaultUserAgent)
+	req.Header.Add("Referrer", opt.Referrer)
+	req.Header.Add("User-Agent", opt.UserAgent)
 	req.Header.Add("Cookie", "kl=wt-wt")
 	req.Header.Add("Content-Type", "x-www-form-urlencoded")
 
@@ -144,11 +170,11 @@ func extractLink(href string) string {
 	return q.Get("uddg")
 }
 
-func Search(param *SearchParam) (*[]SearchResult, error) {
+func SearchWithOption(param *SearchParam, opt *ClientOption) (*[]SearchResult, error) {
 	c := &http.Client{
-		Timeout: 7 * time.Second,
+		Timeout: opt.Timeout,
 	}
-	req, err := param.buildRequest()
+	req, err := buildRequest(param, opt)
 	if err != nil {
 		return nil, err
 	}
@@ -165,4 +191,8 @@ func Search(param *SearchParam) (*[]SearchResult, error) {
 	}
 
 	return result, nil
+}
+
+func Search(param *SearchParam) (*[]SearchResult, error) {
+	return SearchWithOption(param, defaultClientOption)
 }

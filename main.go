@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/sheepla/duckgo/client"
 
@@ -24,9 +25,12 @@ type Options struct {
 	Json bool `arg:"-j, --json" help:"output results in JSON format"`
 	//Shell bool     `help:"start bash-like interactive mode instead of fuzzy-finder UI"`
 	//Page    bool     `arg:"-p, --page" default:"1" help:"index of page"`
-	Browser string   `arg:"-b, --browser" help:"the command of Web browser to open URL"`
-	Query   []string `arg:"positional" help:"keywords to search"`
-	Version bool     `help:"show version"`
+	TimeoutSec int      `arg:"-t, --timeout" help:"timeout seconds" env:"DUCKGO_TIMEOUT"`
+	UserAgent  string   `arg:"-u, --user-agent" help:"User-Agent value" env:"DUCKGO_USER_AGENT"`
+	Referrer   string   `arg:"-r, --referrer" help:"Referrer value" env:"DUCKGO_REFERRER"`
+	Browser    string   `arg:"-b, --browser" help:"the command of Web browser to open URL"`
+	Query      []string `arg:"positional" help:"keywords to search"`
+	Version    bool     `help:"show version"`
 }
 
 func main() {
@@ -72,7 +76,11 @@ func run(opts *Options) error {
 		return err
 	}
 
-	result, err := client.Search(param)
+	result, err := client.SearchWithOption(param, &client.ClientOption{
+		Timeout:   time.Duration(opts.TimeoutSec) * time.Second,
+		UserAgent: opts.UserAgent,
+		Referrer:  opts.Referrer,
+	})
 	if err != nil {
 		return err
 	}
