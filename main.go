@@ -76,14 +76,14 @@ func run(opts *Options) error {
 		return err
 	}
 
-	result, err := client.SearchWithOption(param, &client.ClientOption{
+	result := client.SearchWithOption(param, &client.ClientOption{
 		Timeout:   time.Duration(opts.TimeoutSec) * time.Second,
 		UserAgent: opts.UserAgent,
 		Referrer:  opts.Referrer,
 	})
-	if err != nil {
-		return err
-	}
+    if result.IsErr() {
+        return result.Error()
+    }
 
 	if opts.Json {
 		if err := json.NewEncoder(os.Stdout).Encode(&result); err != nil {
@@ -93,20 +93,20 @@ func run(opts *Options) error {
 		return nil
 	}
 
-	selected, err := find(*result)
+	selected, err := find(*result.Unwrap())
 	if err != nil {
 		return err
 	}
 
 	for _, idx := range selected {
 		if opts.Browser == "" {
-			if err := open.Run((*result)[idx].Link); err != nil {
+			if err := open.Run((*result.Unwrap())[idx].Link); err != nil {
 				return err
 			}
 
 			return nil
 		} else {
-			if err := open.RunWith((*result)[idx].Link, opts.Browser); err != nil {
+			if err := open.RunWith((*result.Unwrap())[idx].Link, opts.Browser); err != nil {
 				return err
 			}
 

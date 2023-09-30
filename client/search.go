@@ -12,6 +12,8 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"golang.org/x/net/html"
+
+	safe "github.com/eminarican/safetypes"
 )
 
 type SearchParam struct {
@@ -64,7 +66,8 @@ func (param *SearchParam) buildURL() (*url.URL, error) {
 	u := &url.URL{
 		Scheme: "https",
 		Host:   "html.duckduckgo.com",
-		Path:   "html"}
+		Path:   "html",
+	}
 	q := u.Query()
 	q.Add("q", param.Query)
 	q.Add("v", "1")
@@ -100,10 +103,10 @@ type SearchResult struct {
 	Snippet string
 }
 
-func parse(r io.Reader) (*[]SearchResult, error) {
+func parse(r io.Reader) safe.Result[*[]SearchResult] {
 	doc, err := goquery.NewDocumentFromReader(r)
 	if err != nil {
-		return nil, err
+		return safe.Err[*[]SearchResult](err.Error())
 	}
 
 	var (
@@ -124,7 +127,7 @@ func parse(r io.Reader) (*[]SearchResult, error) {
 		result = append(result, item)
 	})
 
-	return &result, nil
+	return safe.AsResult[*[]SearchResult](&result, nil)
 }
 
 func removeHtmlTags(node *html.Node, buf *bytes.Buffer) {
@@ -170,29 +173,29 @@ func extractLink(href string) string {
 	return q.Get("uddg")
 }
 
-func SearchWithOption(param *SearchParam, opt *ClientOption) (*[]SearchResult, error) {
+func SearchWithOption(param *SearchParam, opt *ClientOption) safe.Result[*[]SearchResult] {
 	c := &http.Client{
 		Timeout: opt.Timeout,
 	}
 	req, err := buildRequest(param, opt)
 	if err != nil {
-		return nil, err
+		return safe.Err[*[]SearchResult](err.Error())
 	}
 
 	resp, err := c.Do(req)
 	if err != nil {
-		return nil, err
+		return safe.Err[*[]SearchResult](err.Error())
 	}
 	defer resp.Body.Close()
 
-	result, err := parse(resp.Body)
-	if err != nil {
-		return nil, err
+	result := parse(resp.Body)
+	if result.IsErr() {
+		return result
 	}
 
-	return result, nil
+	return result
 }
 
-func Search(param *SearchParam) (*[]SearchResult, error) {
+func Search(param *SearchParam) safe.Result[*[]SearchResult] {
 	return SearchWithOption(param, defaultClientOption)
 }

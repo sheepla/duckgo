@@ -21,6 +21,8 @@ github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81/go.mod h1:Yyn
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/eminarican/safetypes v0.0.8 h1:J+WICjWuhDvIlFYV0jMJrpaar7+jaGLGuysbQt3oQwY=
+github.com/eminarican/safetypes v0.0.8/go.mod h1:L15ewpL5jWPq3wbm4W2yHL3KZ1/ZSJg+NRpDIMcVTOU=
 github.com/koki-develop/go-fzf v0.15.0 h1:M7wqkU6YtfHa5pXe3d6aWy5T5AvoGVfp78fDvp5TdkI=
 github.com/koki-develop/go-fzf v0.15.0/go.mod h1:qrT0S4PW4rfyxvSvQj8DbaMjTOn60KgnCyAhgryK3Z4=
 github.com/lucasb-eyer/go-colorful v1.2.0 h1:1nnpGOrhyZZuNyfu1QjKiUICQ74+3FNCN69Aj6K7nkY=
