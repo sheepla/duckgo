@@ -12,8 +12,6 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"golang.org/x/net/html"
-
-	safe "github.com/eminarican/safetypes"
 )
 
 type SearchParam struct {
@@ -103,10 +101,10 @@ type SearchResult struct {
 	Snippet string
 }
 
-func parse(r io.Reader) safe.Result[*[]SearchResult] {
+func parse(r io.Reader) (*[]SearchResult, error) {
 	doc, err := goquery.NewDocumentFromReader(r)
 	if err != nil {
-		return safe.Err[*[]SearchResult](err.Error())
+		return nil, fmt.Errorf("failed to parse HTML document: %w", err)
 	}
 
 	var (
@@ -127,7 +125,7 @@ func parse(r io.Reader) safe.Result[*[]SearchResult] {
 		result = append(result, item)
 	})
 
-	return safe.AsResult[*[]SearchResult](&result, nil)
+	return &result, nil
 }
 
 func removeHtmlTags(node *html.Node, buf *bytes.Buffer) {
@@ -173,29 +171,29 @@ func extractLink(href string) string {
 	return q.Get("uddg")
 }
 
-func SearchWithOption(param *SearchParam, opt *ClientOption) safe.Result[*[]SearchResult] {
+func SearchWithOption(param *SearchParam, opt *ClientOption) (*[]SearchResult, error) {
 	c := &http.Client{
 		Timeout: opt.Timeout,
 	}
 	req, err := buildRequest(param, opt)
 	if err != nil {
-		return safe.Err[*[]SearchResult](err.Error())
+		return nil, fmt.Errorf("failed to build request: %w", err)
 	}
 
 	resp, err := c.Do(req)
 	if err != nil {
-		return safe.Err[*[]SearchResult](err.Error())
+		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
 	defer resp.Body.Close()
 
-	result := parse(resp.Body)
-	if result.IsErr() {
-		return result
+	result, err := parse(resp.Body)
+	if err != nil {
+		return result, nil
 	}
 
-	return result
+	return result, nil
 }
 
-func Search(param *SearchParam) safe.Result[*[]SearchResult] {
+func Search(param *SearchParam) (*[]SearchResult, error) {
 	return SearchWithOption(param, defaultClientOption)
 }

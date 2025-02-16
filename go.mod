@@ -1,11 +1,12 @@
 module github.com/sheepla/duckgo
 
-go 1.20
+go 1.21.2
+
+toolchain go1.23.4
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/alexflint/go-arg v1.4.3
-	github.com/eminarican/safetypes v0.0.8
 	github.com/koki-develop/go-fzf v0.15.0
 	github.com/mattn/go-runewidth v0.0.15
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
