@@ -96,9 +96,9 @@ func buildRequest(param *SearchParam, opt *ClientOption) (*http.Request, error) 
 }
 
 type SearchResult struct {
-	Title   string
-	Link    string
-	Snippet string
+		Title   string `json:"title"`
+		Link    string `json:"link"`
+		Snippet string `json:"snippet"`
 }
 
 func parse(r io.Reader) (*[]SearchResult, error) {
